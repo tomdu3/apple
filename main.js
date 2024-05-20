@@ -33,8 +33,13 @@ class GameScene extends Phaser.Scene {
     this.player.body.allowGravity = false; // player not affected by gravity
     this.player.setCollideWorldBounds(true); // player does not go out of bounds
     // make apples get into the basket
-    this.player.setSize(80, 15).setOffset(10, 70);
-
+    // this.player.setSize(80, 15).setOffset(10, 70);
+    this.player
+      .setSize(this.player.width - this.player.with / 4, this.player.height / 6)
+      .setOffset(
+        this.player.width / 10,
+        this.player.height - this.player.height / 10,
+      );
     this.target = this.physics.add.image(0, 0, "apple").setOrigin(0, 0);
     this.target.setMaxVelocity(0, speedDown);
 
