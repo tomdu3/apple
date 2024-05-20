@@ -14,10 +14,12 @@ class GameScene extends Phaser.Scene {
     this.player;
     this.cursor;
     this.playerSpeed = speedDown + 50;
+    this.target;
   }
   preload() {
     this.load.image("bg", "./assets/bg.png");
     this.load.image("basket", "./assets/basket.png");
+    this.load.image("apple", "./assets/apple.png");
   } // preloading assets
   create() {
     this.add.image(0, 0, "bg").setOrigin(0, 0);
@@ -28,9 +30,18 @@ class GameScene extends Phaser.Scene {
     this.player.body.allowGravity = false; // player not affected by gravity
     this.player.setCollideWorldBounds(true); // player does not go out of bounds
 
+    this.target = this.physics.add.image(0, 0, "apple").setOrigin(0, 0);
+    this.target.setMaxVelocity(0, speedDown);
+
     this.cursor = this.input.keyboard.createCursorKeys();
   } // creating game objects
   update() {
+    // prevents target to go out of bounds
+    if (this.target.y >= sizes.height) {
+      this.target.setY(0);
+      this.target.setX(this.getRandomX());
+    }
+
     const { left, right } = this.cursor;
 
     if (left.isDown) {
@@ -41,6 +52,10 @@ class GameScene extends Phaser.Scene {
       this.player.setVelocityX(0);
     }
   } // updating game objects continuously
+
+  getRandomX() {
+    return Math.floor(Math.random() * 480);
+  }
 }
 
 const config = {
