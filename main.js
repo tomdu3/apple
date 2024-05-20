@@ -21,6 +21,9 @@ class GameScene extends Phaser.Scene {
 
     // score
     this.textScore;
+
+    // time
+    this.textTime;
   }
   preload() {
     this.load.image("bg", "./assets/bg.png");
@@ -59,6 +62,12 @@ class GameScene extends Phaser.Scene {
 
     // score
     this.textScore = this.add.text(sizes.width - 120, 10, "Score: 0", {
+      font: "25px Arial",
+      fill: "#fff",
+    });
+
+    // time
+    this.textTime = this.add.text(10, 10, "Remaining Time: 00", {
       font: "25px Arial",
       fill: "#fff",
     });
