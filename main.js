@@ -18,6 +18,9 @@ class GameScene extends Phaser.Scene {
 
     // collision
     this.points = 0;
+
+    // score
+    this.textScore;
   }
   preload() {
     this.load.image("bg", "./assets/bg.png");
@@ -53,7 +56,15 @@ class GameScene extends Phaser.Scene {
     );
 
     this.cursor = this.input.keyboard.createCursorKeys();
-  } // creating game objects
+
+    // score
+    this.textScore = this.add.text(sizes.width - 120, 10, "Score: 0", {
+      font: "25px Arial",
+      fill: "#fff",
+    });
+  }
+
+  // creating game objects
   update() {
     // prevents target to go out of bounds
     if (this.target.y >= sizes.height) {
@@ -81,6 +92,7 @@ class GameScene extends Phaser.Scene {
     this.target.setY(0);
     this.target.setX(this.getRandomX());
     this.points++;
+    this.textScore.setText("Score: " + this.points);
   }
 }
 
