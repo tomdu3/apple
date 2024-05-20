@@ -36,6 +36,15 @@ class GameScene extends Phaser.Scene {
     this.target = this.physics.add.image(0, 0, "apple").setOrigin(0, 0);
     this.target.setMaxVelocity(0, speedDown);
 
+    // collision detection
+    this.physics.add.overlap(
+      this.target,
+      this.player,
+      this.targetHit,
+      null,
+      this,
+    );
+
     this.cursor = this.input.keyboard.createCursorKeys();
   } // creating game objects
   update() {
