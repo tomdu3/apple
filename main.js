@@ -8,6 +8,24 @@ const sizes = {
 
 const speedDown = 300;
 
+class GameScene extends Phaser.Scene {
+  constructor() {
+    super("scene-game");
+    this.player;
+  }
+  preload() {
+    this.load.image("bg", "./assets/bg.png");
+    this.load.image("basket", "./assets/basket.png");
+  } // preloading assets
+  create() {
+    this.add.image(0, 0, "bg").setOrigin(0, 0);
+    this.player = this.physics.add
+      .image(0, sizes.height - 100, "basket")
+      .setOrigin(0, 0);
+  } // creating game objects
+  update() {} // updating game objects continuously
+}
+
 const config = {
   type: Phaser.WEBGL,
   width: sizes.width,
