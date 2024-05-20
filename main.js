@@ -24,7 +24,10 @@ class GameScene extends Phaser.Scene {
 
     // time
     this.textTime;
+    this.timedEvent;
+    this.remainingTime;
   }
+
   preload() {
     this.load.image("bg", "./assets/bg.png");
     this.load.image("basket", "./assets/basket.png");
@@ -71,10 +74,18 @@ class GameScene extends Phaser.Scene {
       font: "25px Arial",
       fill: "#fff",
     });
+
+    // time delay
+    this.timedEvent = this.time.delayedCall(3000, this.gameOver, [], this);
   }
 
   // creating game objects
   update() {
+    this.remainingTime = this.timedEvent.getRemainingSeconds();
+    this.textTime.setText(
+      "Remaining Time: " + Math.round(this.remainingTime).toString(),
+    );
+
     // prevents target to go out of bounds
     if (this.target.y >= sizes.height) {
       this.target.setY(0);
@@ -102,6 +113,9 @@ class GameScene extends Phaser.Scene {
     this.target.setX(this.getRandomX());
     this.points++;
     this.textScore.setText("Score: " + this.points);
+  }
+  gameOver() {
+    console.log("Game over 🥵");
   }
 }
 
