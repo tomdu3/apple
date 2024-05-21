@@ -7,6 +7,13 @@ const sizes = {
 };
 
 const speedDown = 300;
+const timeSeconds = 30;
+
+const gameStartDiv = document.querySelector("#gameStartDiv");
+const gameStartBtn = document.querySelector("#gameStartBtn");
+const gameEndDiv = document.querySelector("#gameEndDiv");
+const gameWinLoseSpan = document.querySelector("#gameWinLoseSpan");
+const gameEndScoreSpan = document.querySelector("#gameEndScoreSpan");
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -45,7 +52,11 @@ class GameScene extends Phaser.Scene {
     this.load.audio("coin", "./assets/coin.mp3");
     this.load.audio("bgMusic", "./assets/bgMusic.mp3");
   } // preloading assets
+
   create() {
+    // pause game
+    this.scene.pause("scene-game");
+
     // music
     this.coinMusic = this.sound.add("coin");
     this.bgMusic = this.sound.add("bgMusic");
@@ -97,7 +108,12 @@ class GameScene extends Phaser.Scene {
     });
 
     // time delay
-    this.timedEvent = this.time.delayedCall(3000, this.gameOver, [], this);
+    this.timedEvent = this.time.delayedCall(
+      timeSeconds * 1000,
+      this.gameOver,
+      [],
+      this,
+    );
 
     this.emitter = this.add.particles(0, 0, "money", {
       speed: 100,
@@ -152,7 +168,16 @@ class GameScene extends Phaser.Scene {
     this.textScore.setText("Score: " + this.points);
   }
   gameOver() {
-    console.log("Game over 🥵");
+    this.sys.game.destroy(true);
+    if (this.points >= 10) {
+      gameEndScoreSpan.innerText = this.points;
+      gameWinLoseSpan.innerText = "Win@ 🥰";
+    } else {
+      gameEndScoreSpan.innerText = this.points;
+      gameWinLoseSpan.innerText = "Lose@ 😭";
+    }
+
+    gameEndDiv.style.display = "flex";
   }
 }
 
@@ -173,3 +198,8 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
+
+gameStartBtn.addEventListener("click", () => {
+  gameStartDiv.style.display = "none";
+  game.scene.resume("scene-game");
+});

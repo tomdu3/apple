@@ -87,7 +87,6 @@ main {
 
 #gameStartBtn:hover {
   background-color: var(--dkClr);
-  padding-top: 8.5px;
   border: 0.5px solid var(--liClr);
   color: var(--liClr);
   cursor: pointer;
