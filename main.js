@@ -44,7 +44,10 @@ class GameScene extends Phaser.Scene {
     // make apples get into the basket
     // this.player.setSize(80, 15).setOffset(10, 70);
     this.player
-      .setSize(this.player.width - this.player.with / 4, this.player.height / 6)
+      .setSize(
+        this.player.width - this.player.width / 4,
+        this.player.height / 6,
+      )
       .setOffset(
         this.player.width / 10,
         this.player.height - this.player.height / 10,
