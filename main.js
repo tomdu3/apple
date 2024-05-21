@@ -26,14 +26,29 @@ class GameScene extends Phaser.Scene {
     this.textTime;
     this.timedEvent;
     this.remainingTime;
+
+    // music
+    this.coinMusic;
+    this.bgMusic;
   }
 
   preload() {
+    // images
     this.load.image("bg", "./assets/bg.png");
     this.load.image("basket", "./assets/basket.png");
     this.load.image("apple", "./assets/apple.png");
+
+    // adding music
+    this.load.audio("coin", "./assets/coin.mp3");
+    this.load.audio("bgMusic", "./assets/bgMusic.mp3");
   } // preloading assets
   create() {
+    // music
+    this.coinMusic = this.sound.add("coin");
+    this.bgMusic = this.sound.add("bgMusic");
+    this.bgMusic.play();
+    // this.bgMusic.stop();
+
     this.add.image(0, 0, "bg").setOrigin(0, 0);
     this.player = this.physics.add
       .image(0, sizes.height - 100, "basket")
@@ -112,6 +127,7 @@ class GameScene extends Phaser.Scene {
 
   // collision detection
   targetHit() {
+    this.coinMusic.play();
     this.target.setY(0);
     this.target.setX(this.getRandomX());
     this.points++;
